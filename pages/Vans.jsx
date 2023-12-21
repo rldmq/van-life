@@ -16,7 +16,7 @@ export default function Vans(){
             <img src={e.imageUrl} alt={e.name} className='vans--image'/>
             <div className='vans--container'>
                 <span className='vans--name'>{e.name}</span>
-                <span className='vans--price'>{e.price}</span>
+                <span className='vans--price'>${e.price}</span>
             </div>
             <div className='vans--container'>
                 <span className='vans--type'
