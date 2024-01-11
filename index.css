@@ -417,23 +417,47 @@
     justify-content: flex-start;
     gap: 20px;
 }
-                    /* TEMPORARY FILTERS */
-                    .vans--filter{
-                        margin-top: 25px;
-                        padding: 7px 25px;
-                        color: #4D4D4D;
-                        text-align: center;
-                        font-size: 16px;
-                        font-weight: 500;
-                        line-height: 24px;
-                        border-radius: 5px;
-                        background: #FFEAD0;
-                        cursor: pointer;
-                    }
 
-                    .vans--filter:hover{
-                        translate: 1px 1px;
-                    }
+.vans--filter{
+    margin-top: 25px;
+    padding: 7px 25px;
+    color: #4D4D4D;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    border-radius: 5px;
+    background: #FFEAD0;
+    cursor: pointer;
+}
+
+.vans--filter:hover{
+    translate: 1px 1px;
+}
+
+.vans--filter.simple.active{
+    color: white;
+    background: #E17654;
+}
+.vans--filter.luxury.active{
+    color: white;
+    background: #161616;
+}
+.vans--filter.rugged.active{
+    color: white;
+    background: #115E59;
+}
+
+.vans--filter.clear{
+    text-align: left;
+    text-decoration: underline;
+    background: none;
+    cursor: pointer;
+}
+
+.vans--filter.clear:hover{
+    font-weight: 700;
+}
 
 .vans--list{
     margin-top: 55px;

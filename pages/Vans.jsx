@@ -1,15 +1,28 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 
 export default function Vans(){
 
     const [vanList, setVanList] = React.useState([])
+    const [vanFilter, setVanFilter] = useSearchParams()
+
+    const activeTypeFilter = vanFilter.get('type')
 
     React.useEffect(()=>{
         fetch(`/api/vans`)
             .then(res => res.json())
             .then(data => setVanList(data.vans))
     },[])
+
+    function handleFilterChange(key, value){
+        const searchParams = new URLSearchParams(vanFilter)
+        if(!value){
+            searchParams.delete(key)
+        }else{
+            searchParams.set(key, value)
+        }
+        setVanFilter(searchParams)
+    }
 
     const vanListDisplay = vanList.map(e => (
         <Link to={`${e.id}`}key={e.id} className='vans--item'>
@@ -35,9 +48,17 @@ export default function Vans(){
 
             {/* FILTERS HERE */}
             <div className='vans--filter--container'>
-                <span className='vans--filter'>Simple</span>
-                <span className='vans--filter'>Luxury</span>
-                <span className='vans--filter'>Rugged</span>
+                <span 
+                    onClick={()=>handleFilterChange('type','simple')} 
+                    className={`vans--filter simple ${activeTypeFilter === 'simple' ? 'active' : ''}`}>Simple</span>
+                <span 
+                    onClick={()=>handleFilterChange('type', 'luxury')} 
+                    className={`vans--filter luxury ${activeTypeFilter === 'luxury' ? 'active' : ''}`}>Luxury</span>
+                <span 
+                    onClick={()=>handleFilterChange('type', 'rugged')} 
+                    className={`vans--filter rugged ${activeTypeFilter === 'rugged' ? 'active' : ''}`}>Rugged</span>
+
+                {activeTypeFilter && <span onClick={()=>handleFilterChange('type')} className='vans--filter clear'>Clear Filter</span>}
             </div>
 
             <section className='vans--list'>
