@@ -24,8 +24,10 @@ export default function Vans(){
         setVanFilter(searchParams)
     }
 
-    const vanListDisplay = vanList.map(e => (
-        <Link to={`${e.id}`}key={e.id} className='vans--item'>
+    const filteredVanList = activeTypeFilter ? vanList.filter(e => e.type === activeTypeFilter) : vanList
+
+    const vanListDisplay = filteredVanList.map(e => (
+        <Link to={`${e.id}`}key={e.id} state={{filter:`?${vanFilter.toString()}`}} className='vans--item'>
             <img src={e.imageUrl} alt={e.name} className='vans--image'/>
             <div className='vans--container'>
                 <span className='vans--name'>{e.name}</span>

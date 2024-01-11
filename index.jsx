@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { createBrowserRouter, createRoutesFromElements, RouterProvider, BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import HomeLayout from './layouts/HomeLayout'
 import Home from './pages/Home'
@@ -23,6 +23,28 @@ import './index.css'
 import './server'
 
 function App(){
+
+    const route = createBrowserRouter(createRoutesFromElements(
+        <Route path='/' element={<HomeLayout />}>
+            <Route index element={<Home />} />
+            <Route path='about' element={<About />} />
+            <Route path='vans' element={<Vans />} />
+            <Route path='vans/:id' element={<VanDetails />} />
+            <Route path='404' element={<NotFound />}/>
+            <Route path='host' element={<HostLayout />}>
+                <Route index element={<HostDashboard />} />
+                <Route path='income' element={<HostIncome />} />
+                <Route path='vans' element={<HostVans />} />
+                <Route path='vans/:id' element={<HostVanLayout />}>
+                    <Route index element={<HostVanDetails />} />
+                    <Route path='pricing' element={<HostVanPricing />} />
+                    <Route path='photos' element={<HostVanPhotos />} />
+                </Route>
+                <Route path='reviews' element={<HostReviews />} />
+            </Route>
+        </Route>
+    ))
+
     return(
         <BrowserRouter>
             <Routes>
@@ -46,6 +68,8 @@ function App(){
                 </Route>
             </Routes>
         </BrowserRouter>
+
+        // <RouterProvider route={route} />
     )
 }
 
