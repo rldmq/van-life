@@ -5,19 +5,21 @@ import { createBrowserRouter, createRoutesFromElements, RouterProvider, BrowserR
 import HomeLayout from './layouts/HomeLayout'
 import Home from './pages/Home'
 import About from './pages/About'
-import Vans from './pages/Vans'
-import VanDetails from './pages/vanDetails/VanDetails'
+import Vans, { loader as vansLoader } from './pages/Vans'
+import VanDetails, { loader as vanDetailsLoader } from './pages/vanDetails/VanDetails'
 import HostLayout from './layouts/HostLayout'
-import HostDashboard from './pages/host/HostDashboard'
+import HostDashboard, { loader as hostDashboardLoader } from './pages/host/HostDashboard'
 import HostIncome from './pages/host/HostIncome'
-import HostVans from './pages/host/HostVans'
-import HostVanLayout from './layouts/HostVanLayout'
+import HostVans, { loader as hostVansLoader} from './pages/host/HostVans'
+import HostVanLayout, { loader as hostVanLayoutLoader} from './layouts/HostVanLayout'
 import HostVanDetails from './pages/host/hostDetails/HostVanDetails'
 import HostVanPricing from './pages/host/hostDetails/HostVanPricing'
-import HostVanPhotos from './pages/host/hostDetails/HostVanPhotos'
+import HostVanPhotos, { loader as hostVanPhotosLoader } from './pages/host/hostDetails/HostVanPhotos'
 import HostReviews from './pages/host/HostReviews'
+import Login, { action as loginAction } from './pages/Login'
 
 import NotFound from './pages/NotFound'
+import Error from './pages/Error'
 
 import './index.css'
 import './server'
@@ -25,22 +27,24 @@ import './server'
 function App(){
 
     const router = createBrowserRouter(createRoutesFromElements(
-        <Route path='/' element={<HomeLayout />} errorElement={<NotFound />}>
-            <Route index element={<Home />} />
+        <Route path='/' element={<HomeLayout />} errorElement={<Error />}>
+            <Route index element={<Home />}/>
             <Route path='about' element={<About />} />
-            <Route path='vans' element={<Vans />} />
-            <Route path='vans/:id' element={<VanDetails />} />
+            <Route path='vans' element={<Vans />} loader={vansLoader} errorElement={<Error />}/>
+            <Route path='vans/:id' element={<VanDetails />} loader={vanDetailsLoader} errorElement={<Error />}/>
             <Route path='host' element={<HostLayout />}>
-                <Route index element={<HostDashboard />} />
+                <Route index element={<HostDashboard />} loader={hostDashboardLoader} errorElement={<Error />}/>
                 <Route path='income' element={<HostIncome />} />
-                <Route path='vans' element={<HostVans />} />
-                <Route path='vans/:id' element={<HostVanLayout />}>
-                    <Route index element={<HostVanDetails />} />
+                <Route path='vans' element={<HostVans />} loader={hostVansLoader}  errorElement={<Error />}/>
+                <Route path='vans/:id' element={<HostVanLayout />} loader={hostVanLayoutLoader} errorElement={<Error />}>
+                    <Route index element={<HostVanDetails />} errorElement={<Error />}/>
                     <Route path='pricing' element={<HostVanPricing />} />
-                    <Route path='photos' element={<HostVanPhotos />} />
+                    <Route path='photos' element={<HostVanPhotos />} loader={hostVanPhotosLoader} errorElement={<Error />}/>
                 </Route>
                 <Route path='reviews' element={<HostReviews />} />
             </Route>
+            <Route path='login' element={<Login />} actionElement={loginAction}/>
+            <Route path='*' element={<NotFound />} />
         </Route>
     ))
 

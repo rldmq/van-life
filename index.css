@@ -72,9 +72,60 @@
 }
 
 /* 
-    404 NOT FOUND
+    LOGIN
 */
+.login--{
+    padding: 100px 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #FFF7ED;
+}
 
+.login--motto{
+    font-size: 35px;
+    font-weight: 700;
+}
+
+.login--input{
+    font-size: 16px;
+    min-width: 500px;
+    height: 40px;
+    text-indent: 16px;
+    border: 1px solid rgb(203, 201, 201);
+}
+
+.login--input.email{
+    margin-top: 30px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+.login--input.password{
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.login--button{
+    margin-top: 30px;
+    font-size: 16px;
+    background: #FF8C38;
+    border: none;
+    min-width: 500px;
+    height: 50px;
+    color: white;
+    border-radius: 5px;
+}
+
+.login--button:hover{
+    transform: translate(1px, 1px);
+    cursor: pointer;
+}
+
+.login--button:active{
+    background: grey;
+}
 
 /* 
     HOME

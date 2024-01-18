@@ -1,32 +1,26 @@
 import React from 'react'
-import { useOutletContext, useParams } from 'react-router-dom'
+import { useOutletContext, useParams, useLoaderData } from 'react-router-dom'
+import { getVans } from '../../../api'
+
+// Fetching all van images to simulate multiple images
+export async function loader(){
+    const vanImages = await getVans()
+    return vanImages
+}
 
 export default function HostVanPhotos(){
-    
+
+    const vanImages = useLoaderData()
     // const { currentVan } = useOutletContext()
-
-    const { id } = useParams()
-
-    // Fetching all van images to simulate multiple images
-
-    const [vanImages, setVanImages] = React.useState([])
-
-    React.useEffect(()=>{
-        fetch('/api/vans')
-            .then(res => res.json())
-            .then(data => setVanImages(data.vans))
-    },[id])
 
     const displayVanImages = vanImages.sort((a,b) => Math.random()*100 - Math.random()*100).map(e => (
         <img src={e.imageUrl} alt={e.name} key={e.id}className='host-van-cur--photos-image'/>
     ))
 
     return (
-        vanImages.length > 0 ?
         <div>
             {/* <img src={currentVan.imageUrl} alt={currentVan.name} className='host-van-cur--photos-image'/> */}
             {displayVanImages}
         </div>
-        : <div className='loading'>Loading...</div>
     )
 }

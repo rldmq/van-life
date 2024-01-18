@@ -1,15 +1,24 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLoaderData } from 'react-router-dom'
+import { getHostVans } from '../../api'
+import { requireAuth } from '../../utils'
+
+export async function loader(){
+    await requireAuth()
+    return getHostVans()
+}
 
 export default function HostDashboard(){
 
-    const [hostVans, setHostVans] = React.useState([])
+    const hostVans = useLoaderData()
 
-    React.useEffect(()=>{
-        fetch(`/api/host/vans`)
-            .then(res => res.json())
-            .then(data => setHostVans(data.vans))
-    },[])
+    // const [hostVans, setHostVans] = React.useState([])
+
+    // React.useEffect(()=>{
+    //     fetch(`/api/host/vans`)
+    //         .then(res => res.json())
+    //         .then(data => setHostVans(data.vans))
+    // },[])
 
     const hostVansDisplay = hostVans.map(e => (
         <Link className='host-vans--item' to={e.id} key={e.id}>

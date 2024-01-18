@@ -9,6 +9,7 @@ export default function Header(){
                 <NavLink to='host' className='header--nav-links'>Host</NavLink>
                 <NavLink to='about' className='header--nav-links'>About</NavLink>
                 <NavLink to='vans' className='header--nav-links'>Vans</NavLink>
+                <NavLink to='login' className='header--nav-links'>Login</NavLink>
             </nav>
         </header>
     )

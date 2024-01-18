@@ -1,8 +1,15 @@
 import React from 'react'
-import { useOutletContext } from 'react-router-dom'
+import { useOutletContext, /*useLoaderData*/ } from 'react-router-dom'
+// import { getHostVans } from '../../../api'
+
+// export async function loader({params}){
+//     const currentVan = await getHostVans(params.id)
+//     return currentVan
+// }
 
 export default function HostVanDetails(){
 
+    // const currentVan = useLoaderData()
     const { currentVan } = useOutletContext()
 
     return (

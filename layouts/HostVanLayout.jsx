@@ -1,11 +1,18 @@
 import React from 'react'
-import { useParams, Outlet, Link, NavLink } from 'react-router-dom'
+import { useParams, Outlet, Link, NavLink, useLoaderData } from 'react-router-dom'
+import { getHostVans } from '../api'
+
+export async function loader({params}){
+    const currentVan = await getHostVans(params.id)
+    return currentVan
+}
 
 export default function HostVanLayout(){
 
-    const [currentVan, setCurrentVan] = React.useState(null)
+    const currentVan = useLoaderData()
+    // const [currentVan, setCurrentVan] = React.useState(null)
 
-    const { id } = useParams()
+    // const { id } = useParams()
 
     const activeStyle = {
         textDecoration: 'underline',
@@ -13,14 +20,13 @@ export default function HostVanLayout(){
         color: '#161616'
     }
 
-    React.useEffect(()=>{
-        fetch(`/api/host/vans/${id}`)
-            .then(res => res.json())
-            .then(data => setCurrentVan(data.vans))
-    },[])
+    // React.useEffect(()=>{
+    //     fetch(`/api/host/vans/${id}`)
+    //         .then(res => res.json())
+    //         .then(data => setCurrentVan(data.vans))
+    // },[])
 
     return(
-        currentVan ?
         <div className='host-van-cur--'>
             <Link className='host-van-cur--back' to='..' relative='path'>&larr; Back to all vans</Link>
             <section className='host-van-cur--display'>
@@ -40,6 +46,5 @@ export default function HostVanLayout(){
                 <Outlet context={{currentVan}}/>
             </section>
         </div>
-        : <div className='loading'>Loading...</div>
     )
 }

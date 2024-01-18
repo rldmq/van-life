@@ -1,31 +1,25 @@
 import React from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams, useLoaderData } from 'react-router-dom'
 import { getVans } from '../api'
+
+export async function loader(){
+    try{
+        const vanList = await getVans()
+        return vanList
+    }catch(err){
+        console.log(err)
+        return err
+    }
+}
 
 export default function Vans(){
 
-    const [vanList, setVanList] = React.useState([])
-    const [loading, setLoading] = React.useState(false)
+    const vanList = useLoaderData()
+
     const [vanFilter, setVanFilter] = useSearchParams()
-    const [error, setError] = React.useState(null)
+    // const [error, setError] = React.useState(null)
 
     const activeTypeFilter = vanFilter.get('type')
-
-    React.useEffect(()=>{
-        async function loadVans(){
-            setLoading(true)
-            try{
-                const data = await getVans()
-                setVanList(data)
-            }catch(err){
-                setError(err)
-            }finally{
-                setLoading(false)
-            }
-        }
-
-        loadVans()
-    },[])
 
     function handleFilterChange(key, value){
         const searchParams = new URLSearchParams(vanFilter)
@@ -57,19 +51,14 @@ export default function Vans(){
         </Link>
     ))
 
-    if(loading){
-        return <h1 aria-live='polite'>Loading...</h1> //wait for other updates before announcing this
-    }
-
-    if(error){
-        return <h1 aria-live='assertive'>{error.message}</h1> //interrupt other updates because this is critical
-    }
+    // if(error){
+    //     return <h1 aria-live='assertive'>{error.message}</h1> //interrupt other updates because this is critical
+    // }
 
     return (
         <main className='vans--'>
             <h2 className='vans--explore-text'>Explore our van options</h2>
 
-            {/* FILTERS HERE */}
             <div className='vans--filter--container'>
                 <span 
                     onClick={()=>handleFilterChange('type','simple')} 
